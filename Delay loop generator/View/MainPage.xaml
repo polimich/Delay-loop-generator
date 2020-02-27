@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="Delay_loop_generator.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Delay_loop_generator"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="using:Delay_loop_generator.ViewModel"
+    mc:Ignorable="d"
+    Background="{StaticResource AppBarBackgroundThemeBrush}">
+    <Page.Resources>
+        <Style x:Name="BasicButton" TargetType="Button">
+            <Setter Property="Background" Value="Gainsboro" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        <Style x:Name="BasicRadioButton" TargetType="Viewbox">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="5" />
+            
+        </Style>
+    </Page.Resources>
+    <Page.DataContext>
+        <viewmodel:MainViewModel />
+    </Page.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Czech" Grid.Column="0" Margin="10" Style="{StaticResource BasicButton}" Grid.Row="1" Command="{Binding CommandCZ}"/>
+        <Button Content="English" Grid.Column="1" Margin="10" Style="{StaticResource BasicButton}" Grid.Row="1" Command="{Binding CommandENG}"/>
+        <Button Content="Save" Grid.Column="2" Margin="10" Style="{StaticResource BasicButton}" Grid.Row="1" Command="{Binding Save}"/>
+        <Button Content="Copy" Grid.Column="3" Margin="10" Style="{StaticResource BasicButton}" Grid.Row="1" Command="{Binding Copy}"/>
+        <TextBlock Text="Choose your input:" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="34"/>
+
+        <Viewbox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BasicRadioButton}" >
+            <RadioButton GroupName="basic" x:Name="RB1" Content="{Binding CyclesText, FallbackValue = 'Cycles'}" IsChecked="{Binding RadioButton1}"></RadioButton>
+        </Viewbox>
+        <Viewbox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource BasicRadioButton}">
+            <RadioButton GroupName="basic" x:Name="RB2" Content="{Binding CyclesText, FallbackValue = 'Time and Cycle rate '}"></RadioButton>
+        </Viewbox>
+        <Border BorderThickness="1" BorderBrush="Black" Margin="3" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+            <TextBox x:Name="Cycles" IsEnabled="{Binding IsChecked, ElementName=RB1}" Text="{Binding Cycles}" IsReadOnly="False" InputScope="Number"></TextBox>
+        </Border>
+        <Border BorderThickness="1" BorderBrush="Black" Margin="3" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2">
+            <TextBox x:Name="Time" IsEnabled="{Binding IsChecked, ElementName=RB2}" Text="{Binding Time}" InputScope="Number" ></TextBox>
+        </Border>
+        <Border BorderThickness="1" BorderBrush="Black" Margin="3" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2">
+            <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="{Binding IsChecked, ElementName=RB2}" IsEditable="True" ItemsSource="{Binding DropdownCycle}" Text="{Binding Rate}">
+            </ComboBox>
+        </Border>
+        <Button Content="Start" Grid.Column="1" Grid.ColumnSpan="2" Margin="10" Style="{StaticResource BasicButton}" Grid.Row="6"/>
+        <Border Grid.Row="2" Grid.Column="4" Grid.RowSpan="5" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="1" Margin="10">
+            <TextBlock Text="{Binding Program}"></TextBlock>
+        </Border>
+        <ComboBox Grid.Column="4" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Stretch" ItemsSource="{Binding DropdownR,FallbackValue='R10'}" SelectedValue="'R3'" />
+        <ComboBox Grid.Column="5" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Stretch" ItemsSource="{Binding DropdownR,FallbackValue='R11'}" SelectedValue="'R4'" />
+        <ComboBox Grid.Column="6" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Stretch" ItemsSource="{Binding DropdownR,FallbackValue='R12'}" SelectedValue="'R5'" />
+    </Grid>
+</Page>
